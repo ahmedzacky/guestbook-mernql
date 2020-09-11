@@ -20,9 +20,13 @@ module.exports = gql`
   }
   type Query {
     getFeedbacks: [Feedback]
+    getFeedback(fbID: ID!): Feedback
   }
   type Mutation{
     register(registerInput: RegisterInput): User!
     login(username: String!, password: String!): User!
+    createFeedback(body:String!): Feedback!
+    editFeedback(fbID:ID!, body:String!): Feedback!
+    deleteFeedback(fbID:ID!): String!
   }
 `;
