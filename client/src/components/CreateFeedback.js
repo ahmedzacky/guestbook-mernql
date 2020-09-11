@@ -10,10 +10,10 @@ const CreateFeedback = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (body) {
-      console.log(`Form submitted:`);
+      console.log(`Form submitted`);
       console.log(`Body: ${body}`);
       setBody("");
-      setError({});
+      setError("");
 	} 
 	else {
       setError("Post can't be blank");
