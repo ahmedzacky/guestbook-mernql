@@ -7,6 +7,13 @@ module.exports = gql`
     body: String!
     createdAt: String!
     updatedAt: String!
+    replies: [Reply]!
+  }
+  type Reply{
+    id: ID!
+    createdAt: String!
+    username: String!
+    body: String!
   }
   type User{
     id: ID!
@@ -27,6 +34,7 @@ module.exports = gql`
     login(username: String!, password: String!): User!
     createFeedback(body:String!): Feedback!
     editFeedback(fbID:ID!, body:String!): Feedback!
-    deleteFeedback(fbID:ID!): String!
+    deleteFeedback(fbID:ID!): String! 
+    createReply(fbID: ID!, body: String!): Feedback!
   }
 `;

@@ -1,7 +1,7 @@
 const Feedback = require("./../../models/Feedback");
 const jwt = require("jsonwebtoken");
 const { secretKey } = require("./../../config");
-const { AuthenticationError } = require("apollo-server");
+const { AuthenticationError, UserInputError } = require("apollo-server");
 
 const checkAuth = (context) => {
 	const authHeader = context.req.headers.authorization;
@@ -22,7 +22,7 @@ module.exports = {
 		async getFeedbacks() {
 			try {
 				const feedbacks = await Feedback.find().sort({
-					createdAt: -1,
+					updatedAt: -1,
 				});
 				return feedbacks;
 			} catch {
@@ -42,10 +42,17 @@ module.exports = {
 	Mutation: {
 		//create feedback
 		async createFeedback(_, { body }, context) {
-			const user = checkAuth(context);
+			if (body.trim() === "") {
+				throw new UserInputError("Empty feedback", {
+					errors: {
+						body: "Feedback cant be empty",
+					},
+				});
+			}
+			const { username } = checkAuth(context);
 			const newFeedback = new Feedback({
 				body,
-				username: user.username,
+				username,
 				createdAt: new Date().toISOString(),
 				updatedAt: new Date().toISOString(),
 			});
@@ -54,24 +61,61 @@ module.exports = {
 		},
 		//edit single feedback
 		async editFeedback(_, { body, fbID }, context) {
-			const user = checkAuth(context);
+			const { username } = checkAuth(context);
 			try {
 				const feedback = await Feedback.findById(fbID);
-				if (user.username === feedback.username) {
+				if (username === feedback.username) {
 					const newFeedback = {
 						id: fbID,
 						body,
-						username: user.username,
+						username,
 						createdAt: feedback.createdAt,
 						updatedAt: new Date().toISOString(),
 					};
 					await Feedback.findByIdAndUpdate(fbID, newFeedback);
 					return newFeedback;
 				}
-				throw new Error("Not Authorized");
+				throw new AuthenticationError("Action not allowed");
 			} catch {
 				throw new Error("Something went wrong");
 			}
+		},
+		//delete single feedback
+		async deleteFeedback(_, { fbID }, context) {
+			const { username } = checkAuth(context);
+			try {
+				const feedback = await Feedback.findById(fbID);
+				if (username === feedback.username) {
+					await feedback.delete();
+					return "feedback successfully deleted";
+				}
+				throw new AuthenticationError("Action not allowed");
+			} catch {
+				throw new Error("Something went wrong");
+			}
+		},
+		//create single reply
+		async createReply(_, { fbID, body }, context) {
+			const { username } = checkAuth(context);
+			if (body.trim() === "") {
+				throw new UserInputError("Empty Reply", {
+					errors: {
+						body: "Reply cant be empty",
+					},
+				});
+			}
+			const feedback = await Feedback.findById(fbID);
+			feedback.replies = feedback.replies || []
+			if (feedback) {
+				feedback.replies.unshift({
+					body,
+					username,
+					createdAt: new Date().toISOString(),
+				});
+				await feedback.save()
+				return feedback
+			} 
+			throw new Error("Feedback not found");
 		},
 	},
 };
