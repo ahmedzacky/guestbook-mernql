@@ -1,20 +1,35 @@
-import React from 'react'
+import React from "react";
+import moment from "moment";
+import { Link } from "react-router-dom";
 
-export const Feedback = ({body, createdAt, replies, updatedAt, username}) => {
-    return (
-        <div className="jumbotron p2 pad1y">
-            <em className="d-inline mr-5">Posted by: {username}</em>
-            <em className="d-inline mr-5">Last Updated: {updatedAt}</em>
-            <p className="lead">{body}</p>
-            <hr className="my-2"/>
-            {/* replies and for each */}
-            <p>Replies: {replies.length}</p>
-            {/* <p className="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-            <em className="d-inline mr-5">Reply by: {username}</em>
-            <em className="d-inline mr">Date posted: {date_posted}</em>
-            <hr className="my-2" /> */}
-        </div>
-    )
-}
+export const Feedback = ({
+	body,
+	createdAt,
+	replies,
+	updatedAt,
+	username,
+	id,
+}) => {
+	return (
+		<div className="jumbotron pt-4 pb-2" >
+			<em className="d-inline">Posted by: {username}</em>
+			<em className="d-inline float-right">
+				<Link to={`feedbacks/${id}`}>
+					Last Updated: {moment(updatedAt).fromNow()}
+				</Link>
+			</em>
+			<p className="lead my-4">{body}</p>
+			{replies.length > 0 ? (
+				<Link to={`feedbacks/${id}`}>
+					<p>Replies: {replies.length}</p>
+				</Link>
+			) : (
+				<Link to={`feedbacks/${id}`}>
+					<p>Reply to Feedback</p>
+				</Link>
+			)}
+		</div>
+	);
+};
 
-export default Feedback
+export default Feedback;
