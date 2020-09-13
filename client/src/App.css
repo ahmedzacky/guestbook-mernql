@@ -1,3 +1,11 @@
-.bg-dark{
-    border-radius: 0 0 5px 5px;
+.bg-dark {
+	border-radius: 0 0 5px 5px;
+}
+
+body{
+    background-color: #cff;
+}
+
+.main-form{
+    height: 4em;
 }

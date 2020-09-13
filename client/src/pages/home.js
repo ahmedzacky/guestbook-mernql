@@ -10,14 +10,14 @@ const Home = () => {
 	return (
 		<div>
 			<CreateFeedback />
-            <h3 className="text-center mb-4">Recent feedbacks</h3>
+			<h3 className="text-center mb-4">Recent feedbacks</h3>
 			{loading ? (
-				<h2>LOADING...</h2>
+				<h3 className="text-center my-5">Loading...</h3>
 			) : (
 				data.getFeedbacks.map((feedback) => (
 					<Feedback
 						key={feedback.id}
-                        id={feedback.id}
+						id={feedback.id}
 						body={feedback.body}
 						createdAt={feedback.createdAt}
 						replies={feedback.replies}

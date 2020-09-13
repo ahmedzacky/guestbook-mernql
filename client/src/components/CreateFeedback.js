@@ -10,8 +10,6 @@ const CreateFeedback = () => {
 	const onSubmit = (e) => {
 		e.preventDefault();
 		if (body) {
-			console.log(`Form submitted`);
-			console.log(`Body: ${body}`);
 			setBody("");
 			setError("");
 		} else {
@@ -19,29 +17,26 @@ const CreateFeedback = () => {
 		}
 	};
 	return (
-		<div>
-			<div style={{ marginTop: 10 }}>
-				<h3>Post a Feedback</h3>
-				<h6>Be constructive</h6>
-				<form onSubmit={onSubmit}>
-					<div className="form-group">
-						<input
-							type="text"
-							className="form-control"
-							value={body}
-							onChange={handleForm}
-						/>
-					</div>
-					{error && <p className="text-danger">{error}</p>}
-					<div className="form-group">
-						<input
-							type="submit"
-							value="Submit"
-							className="btn btn-primary"
-						/>
-					</div>
-				</form>
-			</div>
+		<div className="my-2">
+			<h3>Post a Feedback</h3>
+			<form onSubmit={onSubmit}>
+				<div className="form-group">
+					<input
+						type="text"
+						className="form-control main-form my-2"
+						value={body}
+						onChange={handleForm}
+					/>
+				</div>
+				{error && <p className="text-danger">{error}</p>}
+				<div className="form-group mx-auto">
+					<input
+						type="submit"
+						value="Submit"
+						className="btn btn-primary"
+					/>
+				</div>
+			</form>
 		</div>
 	);
 };
