@@ -76,7 +76,7 @@ module.exports = {
 			//make sure user doesn't exist
 			const user = await User.findOne({ username });
 			if (user) {
-				throw new UserInputError("Username is taken", {
+				throw new UserInputError("Username is already taken", {
 					errors: {
 						username: "This username already exists",
 					},
@@ -84,17 +84,17 @@ module.exports = {
 			}
 
 			//hash the password and return auth token
-			password = await bcrypt.hash(password, 12);
+			const hashedPassword = await bcrypt.hash(password, 12);
 			const newUser = new User({
 				username,
-				password,
+				password: hashedPassword,
 			});
 
 			const res = await newUser.save();
-
+			console.log(res)
 			const token = jwt.sign(
 				{
-					id: res.id,
+					id: res._id,
 					username: res.username,
 				},
 				secretKey,
@@ -102,7 +102,8 @@ module.exports = {
 			);
 
 			return {
-				...res,
+				username,
+				id: res._id,
 				token,
 			};
 		},
