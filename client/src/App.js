@@ -10,12 +10,7 @@ function App() {
 	return (
 		<Router>
 			<div className="container">
-				<nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-					<a
-						className="navbar-brand"
-						href="/"
-						rel="noopener noreferrer"
-					></a>
+				<nav className="navbar navbar-expand-lg navbar-dark bg-dark justify-content-between">
 					<Link to="/" className="navbar-brand">
 						Guestbook - challenge
 					</Link>
