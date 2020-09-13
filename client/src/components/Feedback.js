@@ -14,7 +14,7 @@ export const Feedback = ({
 			<em className="d-inline">Posted by: {username}</em>
 			<em className="d-inline float-right">
 				<Link to={`feedbacks/${id}`}>
-					Last Updated: {moment(updatedAt).fromNow()}
+					Updated {moment(updatedAt).fromNow()}
 				</Link>
 			</em>
 			<p className="lead my-4">{body}</p>

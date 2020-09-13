@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
+import { AuthContext } from '../context/auth'
 
 const Login = ({ history }) => {
+    const context = useContext(AuthContext)
 	const [values, setValues] = useState({
 		username: "",
 		password: "",
@@ -16,6 +18,7 @@ const Login = ({ history }) => {
 
 	const [loginUser, { loading }] = useMutation(LOGIN_USER, {
 		update(_, result) {
+            context.login(result.data.login)
 			history.push("/");
 		},
 		onError(err) {
