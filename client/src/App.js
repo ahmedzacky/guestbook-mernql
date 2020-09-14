@@ -1,12 +1,24 @@
-import React from "react";
+import React, { useContext } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import Home from "./pages/home";
 import Login from "./pages/login";
 import Signup from "./pages/signup";
 import Navbar from "./components/Navbar";
-import { AuthProvider } from "./context/auth";
+import { AuthProvider, AuthContext } from "./context/auth";
+
+const AuthRoute = ({ component: Component, ...rest }) => {
+	const { user } = useContext(AuthContext);
+	return (
+		<Route
+			{...rest}
+			render={(props) =>
+				user ? <Redirect to="/" /> : <Component {...props} />
+			}
+		/>
+	);
+};
 
 const App = () => {
 	return (
@@ -15,8 +27,8 @@ const App = () => {
 				<div className="container">
 					<Navbar />
 					<Route path="/" exact component={Home} />
-					<Route path="/login" component={Login} />
-					<Route path="/signup" component={Signup} />
+					<AuthRoute path="/login" exact component={Login} />
+					<AuthRoute path="/signup" exact	 component={Signup} />
 				</div>
 			</Router>
 		</AuthProvider>

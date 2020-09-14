@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import CreateFeedback from "../components/CreateFeedback";
 import Feedback from "../components/Feedback";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
+import { AuthContext } from "../context/auth";
 
 const Home = () => {
+    const { user } = useContext(AuthContext)
 	const { loading, data } = useQuery(FETCH_FEEDBACKS);
 	if (data) console.log(data);
 	return (
 		<div>
-			<CreateFeedback />
+			{user && <CreateFeedback />}
 			<h3 className="text-center mb-4">Recent feedbacks</h3>
 			{loading ? (
 				<h3 className="text-center my-5">Loading...</h3>
