@@ -4,6 +4,7 @@ import moment from "moment";
 import { AuthContext } from "./../context/auth";
 import EditGadget from "./EditGadget";
 import DeleteGadget from "./DeleteGadget";
+import PostReply from "./PostReply";
 
 function SingleFeedback(props) {
 	const { user } = useContext(AuthContext);
@@ -28,22 +29,21 @@ function SingleFeedback(props) {
 			<>
 				<em className="d-inline text-primary">By: {username}</em>
 				<em className="d-inline float-right">
-					Last Updated: {moment(updatedAt).format("hh:mm d/mm/yy")}
+					Last Updated: {moment(updatedAt).format("DD/MM/YYYY h:mm a")}
 					{user && user.username === username && (
 						<>
-							{console.log(id)}
 							<EditGadget body={body} id={id} />
 							<DeleteGadget id={id} />
 						</>
 					)}
 				</em>
 				<em className="d-block text-primary mt-2">
-					Posted at: {moment(createdAt).format("MMMM Do YYYY")}
+					Posted at: {moment(createdAt).format("DD/MM/YYYY h:mm a")}
 				</em>
 
 				<p className="lead my-4">{body}</p>
 				{user ? (
-					<hr></hr>
+					<PostReply id={id}/>
 				) : (
 					<>
 						<hr />
@@ -58,7 +58,7 @@ function SingleFeedback(props) {
 					<div key={id} className="bg-info p-2 my-3 rounded">
 						<em className="d-inline text-white">By: {username}</em>
 						<em className="d-inline float-right text-white">
-							Posted: {moment(createdAt).format("d-mm-yy")}
+							Posted: {moment(createdAt).format("DD/MM/YYYY h:mm a")}
 						</em>
 						<p className="lead text-white mt-2">{body}</p>
 					</div>
