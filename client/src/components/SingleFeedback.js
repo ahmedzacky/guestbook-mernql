@@ -29,7 +29,8 @@ function SingleFeedback(props) {
 			<>
 				<em className="d-inline text-primary">By: {username}</em>
 				<em className="d-inline float-right">
-					Last Updated: {moment(updatedAt).format("DD/MM/YYYY h:mm a")}
+					Last Updated:{" "}
+					{moment(updatedAt).format("DD/MM/YYYY h:mm a")}
 					{user && user.username === username && (
 						<>
 							<EditGadget body={body} id={id} />
@@ -43,7 +44,7 @@ function SingleFeedback(props) {
 
 				<p className="lead my-4">{body}</p>
 				{user ? (
-					<PostReply id={id}/>
+					<PostReply id={id} />
 				) : (
 					<>
 						<hr />
@@ -58,7 +59,8 @@ function SingleFeedback(props) {
 					<div key={id} className="bg-info p-2 my-3 rounded">
 						<em className="d-inline text-white">By: {username}</em>
 						<em className="d-inline float-right text-white">
-							Posted: {moment(createdAt).format("DD/MM/YYYY h:mm a")}
+							Posted:{" "}
+							{moment(createdAt).format("DD/MM/YYYY h:mm a")}
 						</em>
 						<p className="lead text-white mt-2">{body}</p>
 					</div>

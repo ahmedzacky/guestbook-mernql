@@ -12,8 +12,7 @@ export const Feedback = ({ body, replies, updatedAt, username, id }) => {
 			<em className="d-inline">Posted by: {username}</em>
 			<em className="d-inline float-right">
 				<Link to={`/feedbacks/${id}`}>
-					Last Updated:{" "}
-					{moment(updatedAt).fromNow()}
+					Last Updated: {moment(updatedAt).fromNow()}
 				</Link>
 				{user && user.username === username && (
 					<>

@@ -4,6 +4,8 @@ const { MONGODB } = require("./config.js");
 const typeDefs = require('./graphql/typeDefs')
 const resolvers = require('./graphql/resolvers/index')
 
+const port = process.env.PORT || 5000
+
 mongoose
     .connect(MONGODB, {
         useNewUrlParser: true,
@@ -12,7 +14,7 @@ mongoose
     })
     .then(() => {
         console.log('connected to mongo')
-        return server.listen({ port: 5000 });
+        return server.listen({ port });
     })
     .then((res) => {
         console.log(`server running at ${res.url}`);
