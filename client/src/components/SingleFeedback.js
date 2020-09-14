@@ -28,9 +28,10 @@ function SingleFeedback(props) {
 			<>
 				<em className="d-inline text-primary">By: {username}</em>
 				<em className="d-inline float-right">
-					Last Updated: {moment(updatedAt).format("hh:mm d/mm/yy")}{" "}
-					{user.username === username && (
+					Last Updated: {moment(updatedAt).format("hh:mm d/mm/yy")}
+					{user && user.username === username && (
 						<>
+							{console.log(id)}
 							<EditGadget body={body} id={id} />
 							<DeleteGadget id={id} />
 						</>
@@ -71,6 +72,7 @@ function SingleFeedback(props) {
 const FETCH_FEEDBACK = gql`
 	query($fbID: ID!) {
 		getFeedback(fbID: $fbID) {
+			id
 			username
 			body
 			createdAt

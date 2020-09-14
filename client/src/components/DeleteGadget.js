@@ -1,6 +1,11 @@
 import React from "react";
 import Modal from "react-modal";
 import { BsTrash } from "react-icons/bs";
+import gql from "graphql-tag";
+import { useMutation } from "@apollo/react-hooks";
+import { FETCH_FEEDBACKS } from "./../pages/home";
+import { useHistory } from "react-router-dom";
+
 
 const customStyles = {
 	content: {
@@ -14,17 +19,33 @@ const customStyles = {
 	},
 };
 
-const DeleteGadget = ({ id }) => {
+const DeleteGadget = (props) => {
+    let history = useHistory();
 	const [modalIsOpen, setIsOpen] = React.useState(false);
+
 	function openModal() {
-		setIsOpen(true);
+        setIsOpen(true);
 	}
 
 	function closeModal() {
 		setIsOpen(false);
-	}
+    }
 
 	Modal.setAppElement("#root");
+
+	const [deleteFeedback] = useMutation(DELETE_FEEDBACK, {
+        variables: {fbID: props.id},
+		refetchQueries: [
+			{
+				query: FETCH_FEEDBACKS,
+			},
+		],
+    });
+    
+    const progressDelete = () => {
+        deleteFeedback();
+        history.push("/");
+    }
 
 	return (
 		<>
@@ -36,23 +57,32 @@ const DeleteGadget = ({ id }) => {
 			>
 				<div className="mb-4">
 					<h2 className="d-inline">Delete feedback</h2>
+				</div>
+				<div className="justify-content-between">
+					<p>Are you sure you want to delete this feedback?</p>
 					<button
-						className="btn btn-danger float-right ml-4 py-1"
+						type="submit"
+						className="btn btn-primary float-right"
+						onClick={progressDelete}
+					>
+						Delete
+					</button>
+					<button
+						className="btn btn-outline-danger"
 						onClick={closeModal}
 					>
-						X
+						Cancel
 					</button>
 				</div>
-				<form id="edit-form">
-					<input
-						type="submit"
-						className="btn btn-primary mt-3"
-						value="Submit"
-					/>
-				</form>
 			</Modal>
 		</>
 	);
 };
+
+const DELETE_FEEDBACK = gql`
+	mutation deleteFeedback($fbID: ID!) {
+		deleteFeedback(fbID: $fbID)
+	}
+`;
 
 export default DeleteGadget;
