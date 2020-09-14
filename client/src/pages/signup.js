@@ -19,7 +19,7 @@ const Signup = ({ history }) => {
 
 	const [addUser, { loading }] = useMutation(REGISTER_USER, {
 		update(_, result) {
-			context.register(result.data.register)
+			context.login(result.data.register)
 			history.push("/");
 		},
 		onError(err) {

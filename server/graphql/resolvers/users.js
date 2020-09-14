@@ -91,7 +91,6 @@ module.exports = {
 			});
 
 			const res = await newUser.save();
-			console.log(res)
 			const token = jwt.sign(
 				{
 					id: res._id,
