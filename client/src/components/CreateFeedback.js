@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
+import { FETCH_FEEDBACKS } from '../pages/home'
 
 const CreateFeedback = () => {
 	const [body, setBody] = useState("");
@@ -10,11 +11,11 @@ const CreateFeedback = () => {
 		setBody(e.target.value);
 	};
 
-	const [createFeedback, { errors }] = useMutation(CREATE_FEEDBACK, {
+	const [ createFeedback ] = useMutation(CREATE_FEEDBACK, {
 		variables: { body },
-		update(_, result) {
-			console.log(result);
-		},
+		refetchQueries: [{
+			query: FETCH_FEEDBACKS
+		}]
 	});
 
 	const onSubmit = (e) => {

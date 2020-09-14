@@ -7,8 +7,7 @@ import { AuthContext } from "../context/auth";
 
 const Home = () => {
     const { user } = useContext(AuthContext)
-	const { loading, data } = useQuery(FETCH_FEEDBACKS);
-	if (data) console.log(data);
+    const { loading, data } = useQuery(FETCH_FEEDBACKS);
 	return (
 		<div>
 			{user && <CreateFeedback />}
@@ -32,7 +31,7 @@ const Home = () => {
 	);
 };
 
-const FETCH_FEEDBACKS = gql`
+export const FETCH_FEEDBACKS = gql`
 	{
 		getFeedbacks {
 			id
