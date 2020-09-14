@@ -69,6 +69,7 @@ module.exports = {
 						id: fbID,
 						body,
 						username,
+						replies: feedback.replies,
 						createdAt: feedback.createdAt,
 						updatedAt: new Date().toISOString(),
 					};
