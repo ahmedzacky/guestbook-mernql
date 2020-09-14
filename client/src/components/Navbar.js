@@ -14,12 +14,12 @@ const Navbar = () => {
 					<div className="d-inline">
 						<ul className="navbar-nav">
 							<li className="navbar-item active">
-								<p className="nav-link">
+								<p className="nav-link c-default">
 									{user.username}
 								</p>
 							</li>
 							<li className="navbar-item">
-								<p className="nav-link" onClick={logout}>
+								<p className="nav-link pointer" onClick={logout}>
 									Logout
 								</p>
 							</li>
