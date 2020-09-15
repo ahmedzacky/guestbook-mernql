@@ -4,7 +4,6 @@ import { BsPencil } from "react-icons/bs";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 import { FETCH_FEEDBACKS } from "./../pages/home";
-import { useHistory } from "react-router-dom";
 
 const customStyles = {
 	content: {
@@ -21,7 +20,6 @@ const customStyles = {
 const EditGadget = ({ id, body }) => {
 	const [modalIsOpen, setIsOpen] = React.useState(false);
 	const [newBody, setNewBody] = React.useState(body);
-	let history = useHistory();
 
 	function onChange(e) {
 		setNewBody(e.target.value);
@@ -48,7 +46,6 @@ const EditGadget = ({ id, body }) => {
 		e.preventDefault();
 		await editFeedback();
 		closeModal()
-		history.push(`/feedbacks/${id}`)
 	}
 
 

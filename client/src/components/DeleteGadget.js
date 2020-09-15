@@ -18,7 +18,7 @@ const customStyles = {
 	},
 };
 
-const DeleteGadget = (props) => {
+const DeleteGadget = ({ id }) => {
     let history = useHistory();
 	const [modalIsOpen, setIsOpen] = React.useState(false);
 
@@ -33,7 +33,7 @@ const DeleteGadget = (props) => {
 	Modal.setAppElement("#root");
 
 	const [deleteFeedback] = useMutation(DELETE_FEEDBACK, {
-        variables: {fbID: props.id},
+        variables: {fbID: id},
 		refetchQueries: [
 			{
 				query: FETCH_FEEDBACKS,
