@@ -4,6 +4,8 @@ GraphQL CRUD API & React client.
 This application has been developed to help end users leave feedback after visiting a place. Ex: A restaurant or a hotel.
 They can also reply to other feedbacks with their relevant experience
 
+Live version: https://guestbook-zacky.netlify.app/
+
 ## Setup
 
 ### Server
@@ -37,6 +39,10 @@ As a user, I can
 
 ### Backend
 
+*I've left the mongodb connection string on purpose in case you need to test the app locally*
+
+*The password and username are currently on lite security measures since we're in dev env*
+
 - Node
 - GraphQL + Apollo Server (Express built in Apollo)
 - MongoDB + Mongoose
@@ -65,8 +71,8 @@ User:
 
 #### Mutations
 
-- Register - creates new user (hashed password stored in DB)
-- Login - creates token for new user
+- Register(username, password, confirm password) - validates username and password  (hashed password stored in DB), returns with user object.
+- Login(username, password) - matches username and password, replies with user object
 
 Authenticated mutations:
 
